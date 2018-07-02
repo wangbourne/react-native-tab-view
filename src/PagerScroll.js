@@ -63,7 +63,7 @@ export default class PagerScroll<T: *> extends React.Component<
     } else if (
       prevProps.navigationState.index !== this.props.navigationState.index
     ) {
-      this._scrollTo(amount, false); //disable jump animation
+      this._scrollTo(amount);
     }
   }
 
