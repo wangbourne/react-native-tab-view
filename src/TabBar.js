@@ -137,7 +137,11 @@ export default class TabBar<T: *> extends React.Component<Props<T>, State> {
     } else if (prevProps.navigationState.index !== pendingIndex) {
       this._resetScroll(this.props.navigationState.index);
     }
-    this._handlePosition();
+    /*
+     * Seem there's a bug in ScrollView scrollTo(value): Not refresh if value does not change.
+     *  Math.random()/100) is to force update the position.
+    */
+    this._adjustScroll(this.props.navigationState.index + Math.random() / 100);
   }
 
   componentWillUnmount() {
