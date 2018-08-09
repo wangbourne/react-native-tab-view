@@ -10,6 +10,7 @@ import {
   ScrollView,
   Platform,
   I18nManager,
+  InteractionManager,
 } from 'react-native';
 import TouchableItem from './TouchableItem';
 import { SceneRendererPropType } from './PropTypes';
@@ -262,13 +263,15 @@ export default class TabBar<T: *> extends React.Component<Props<T>, State> {
   };
 
   _handleTabPress = ({ route }: Scene<*>) => {
-    this._pendingIndex = this.props.navigationState.routes.indexOf(route);
+    InteractionManager.runAfterInteractions(() => {
+      this._pendingIndex = this.props.navigationState.routes.indexOf(route);
 
-    if (this.props.onTabPress) {
-      this.props.onTabPress({ route });
-    }
+      if (this.props.onTabPress) {
+        this.props.onTabPress({ route });
+      }
 
-    this.props.jumpTo(route.key);
+      this.props.jumpTo(route.key);
+    });
   };
 
   _normalizeScrollValue = (props, value) => {
